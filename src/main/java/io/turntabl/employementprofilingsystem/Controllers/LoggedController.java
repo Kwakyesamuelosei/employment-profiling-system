@@ -167,7 +167,7 @@ public class LoggedController implements LoggedDAO {
         Map<String, Object> response = new HashMap<>();
 
         try {
-            List<LoggedTO> log = jdbcTemplate.query("select * from LoggedChart(?::date)",
+            List<LoggedTO> log = jdbcTemplate.query("select * from log_func(?::date)",
                     new Object[]{endDate},
                     BeanPropertyRowMapper.newInstance(LoggedTO.class));
 
