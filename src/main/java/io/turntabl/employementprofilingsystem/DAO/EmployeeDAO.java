@@ -13,7 +13,7 @@ public interface EmployeeDAO {
     @PostMapping("/v1/api/employee")
     Map<String, Object> addEmployee(@RequestBody AddEmployee requestData);
 
-    @ApiOperation("List of Employee Profile")
+    @ApiOperation("List of Employee")
     @CrossOrigin(origins = "*")
     @GetMapping("/v1/api/employees")
     Map<String, Object> getAllEmployee();
