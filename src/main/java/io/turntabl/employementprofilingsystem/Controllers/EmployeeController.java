@@ -1,5 +1,8 @@
 package io.turntabl.employementprofilingsystem.Controllers;
 
+import io.opentracing.Span;
+import io.opentracing.Tracer;
+import io.opentracing.tag.Tags;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.turntabl.employementprofilingsystem.DAO.EmployeeDAO;
@@ -27,6 +30,9 @@ import java.util.Map;
 class EmployeeController implements EmployeeDAO {
     @Autowired
     JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    Tracer tracer;
 
     Parsor parsor = new Parsor();
     Date date = new Date();
@@ -108,22 +114,28 @@ class EmployeeController implements EmployeeDAO {
     @GetMapping("/v1/api/employees")
     @Override
     public Map<String, Object> getAllEmployee(){
-
+        Span span = tracer.buildSpan("getAllEmployees").start();
+        span.setTag("http.method", "GET");
         Map<String, Object> response = new HashMap<>();
         try{
             List<Employee> employeeTOList =  jdbcTemplate.query(
                     "select * from employee",
                     BeanPropertyRowMapper.newInstance(Employee.class)
             );
+            span.setTag("db.instance", "employees");
+            span.setTag("db.statement", "select * from employee");
             response.put("code","00");
             response.put("msg","Data retrieved successfully");
             response.put("data",employeeTOList);
-
+            span.log("employees data retrieved successfully");
         }catch (Exception e){
             e.printStackTrace();
             response.put("code","02");
             response.put("msg","Something went wrong, try again later");
+            span.log("Error retrieving employees data from Db");
         }
+        span.setTag("http.response", response.toString());
+        span.finish();
         return response;
     }
 
