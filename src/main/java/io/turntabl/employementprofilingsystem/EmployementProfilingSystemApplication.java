@@ -1,8 +1,10 @@
 package io.turntabl.employementprofilingsystem;
 
+import io.jaegertracing.Configuration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import java.io.IOException;
@@ -17,6 +19,13 @@ public class EmployementProfilingSystemApplication {
 	public static void main(String[] args) throws GeneralSecurityException, IOException {
 
 		SpringApplication.run(EmployementProfilingSystemApplication.class, args);
+	}
+
+	@Bean
+	public io.opentracing.Tracer initTracer() {
+		Configuration.SamplerConfiguration samplerConfig = new Configuration.SamplerConfiguration().fromEnv();
+		Configuration.ReporterConfiguration reporterConfig = new Configuration.ReporterConfiguration().fromEnv();
+		return new Configuration("EmployeeProfilingService").withSampler(samplerConfig).withReporter(reporterConfig).getTracer();
 	}
 
 }
