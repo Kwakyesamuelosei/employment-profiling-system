@@ -25,7 +25,7 @@ public class EmployementProfilingSystemApplication {
 	public io.opentracing.Tracer initTracer() {
 		Configuration.SamplerConfiguration samplerConfig = new Configuration.SamplerConfiguration().fromEnv();
 		Configuration.ReporterConfiguration reporterConfig = new Configuration.ReporterConfiguration().fromEnv();
-		return new Configuration("EmployeeProfilingService").withSampler(samplerConfig).withReporter(reporterConfig).getTracer();
+		return new Configuration("HolidayRequestService").withSampler(samplerConfig).withReporter(reporterConfig).getTracer();
 	}
 
 }
