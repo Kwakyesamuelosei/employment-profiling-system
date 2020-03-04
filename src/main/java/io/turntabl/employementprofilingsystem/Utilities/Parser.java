@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 @Component
-public class Parsor {
+public class Parser {
 
     public Map<String, Object> validate_params(Map<String, Object> requestData, List<String> requiredParams){
 
