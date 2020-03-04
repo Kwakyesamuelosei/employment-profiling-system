@@ -70,6 +70,7 @@ public class RequestController {
     public List<RequestTO> getAllRequests() {
         return this.jdbcTemplate.query("select request_start_date, request_report_date, request_status.req_status from requests inner join request_status on requests.request_status_id = request_status.request_status_id",
                 new BeanPropertyRowMapper<RequestTO>(RequestTO.class)
+
         );
     }
 
@@ -101,7 +102,7 @@ public class RequestController {
             response.put("decoded_token", jwt);
             return response;
         } catch (JWTException e) {
-            e.printStackTrace();
+            e.getCause();
             response.put("success", false);
             return response;
         }

@@ -1,5 +1,6 @@
 package io.turntabl.employementprofilingsystem.Models;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class RequestTO {
@@ -26,6 +27,10 @@ public class RequestTO {
         this.req_status = req_status;
     }
 
+//    SimpleDateFormat DateFor = new SimpleDateFormat("E, dd MMMM yyyy");
+//    String startDate = DateFor.format(request.getRequest_start_date());
+//    String reportDate = DateFor.format(request.getRequest_report_date());
+
     public int getRequest_id() {
         return request_id;
     }
@@ -43,6 +48,8 @@ public class RequestTO {
     }
 
     public Date getRequest_start_date() {
+       // SimpleDateFormat DateFor = new SimpleDateFormat("E, dd MMMM yyyy");
+      //  String request_start_date = DateFor.format(getRequest_start_date());
         return request_start_date;
     }
 

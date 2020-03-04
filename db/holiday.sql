@@ -2,10 +2,10 @@ DROP TABLE IF EXISTS employee cascade;
 
 CREATE TABLE employee (
 	employee_id serial primary key,
-	employee_firstName text not null,
-	employee_lastName text not null,
+	employee_firstName text ,
+	employee_lastName text ,
 	employee_phoneNumber text,
-	employee_email text not null,
+	employee_email text,
 	employee_address text,
 	employee_role text,
 	employee_dev_level text,

@@ -30,14 +30,13 @@ public class GmailService {
     private static final String CREDENTIALS_FILE_PATH = "credentials.json";
 
     public static void sendMail(String from, String to, String subject, String bodyText) throws IOException, GeneralSecurityException {
-        Gmail service = getGmail();
+        Gmail service = getGmail(from);
         System.out.println(service.getApplicationName());
         System.out.println(service.getBaseUrl());
         System.out.println(service.users().toString());
 
-        String user = from;
         try {
-            service.users().messages().send(user,
+            service.users().messages().send(from,
                     createMessageWithEmail(createEmail(to, from, subject, bodyText))
             ).execute();
         } catch (MessagingException e) {
@@ -45,7 +44,7 @@ public class GmailService {
         }
     }
 
-    public static Gmail getGmail() throws GeneralSecurityException, IOException {
+    public static Gmail getGmail(String from) throws GeneralSecurityException, IOException {
         HttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
 
         GoogleCredential gcFromJson = GoogleCredential
@@ -56,13 +55,12 @@ public class GmailService {
                 .setTransport(gcFromJson.getTransport())
                 .setJsonFactory(gcFromJson.getJsonFactory())
                 .setServiceAccountId(gcFromJson.getServiceAccountId())
-                .setServiceAccountUser( "dawud.ismail@turntabl.io")
+                .setServiceAccountUser( from)
                 .setServiceAccountPrivateKey(gcFromJson.getServiceAccountPrivateKey())
                 .setServiceAccountScopes(gcFromJson.getServiceAccountScopes())
                 .setTokenServerEncodedUrl(gcFromJson.getTokenServerEncodedUrl())
                 .build();
-        boolean token = credential.refreshToken();
-        System.out.println(token);
+
         return new Gmail.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
                 .setApplicationName(APPLICATION_NAME)
                 .build();
