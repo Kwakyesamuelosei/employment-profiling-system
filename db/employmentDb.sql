@@ -1,16 +1,16 @@
 CREATE TABLE employee (
 	employee_id serial primary key,
-	employee_firstName text not null,
-	employee_lastName text not null,
-	employee_phoneNumber text not null,
+	employee_firstName text,
+	employee_lastName text,
+	employee_phoneNumber text,
 	employee_email text not null,
-	employee_address text not null,
-	employee_role text not null,
-	employee_dev_level text not null,
-	employee_hire_date DATE not null,
-	employee_onLeave BOOLEAN not null,
-	employee_gender text not null,
-	employee_status text not null
+	employee_address text,
+	employee_role text,
+	employee_dev_level text,
+	employee_hire_date DATE,
+	employee_onLeave BOOLEAN,
+	employee_gender text,
+	employee_status text
 );
 
 CREATE TABLE assignproject (
@@ -40,6 +40,30 @@ create table LoggedVacation (
 	vacation_date DATE,
 	emp_id int references employees (emp_id),
 	primary key (vacation_date, emp_id)
+);
+
+--For holiday requests...
+
+--- DATABASE FOR HOLIDAY REQUEST PLATFORM ---
+
+DROP TABLE IF EXISTS requests cascade;
+DROP TABLE IF EXISTS request_status cascade;
+
+--- HOLIDAY REQUEST STATUS TABLE---
+
+CREATE TABLE request_status(
+    request_status_id serial primary key NOT NULL,
+    req_status varchar(10)
+);
+
+--- HOLIDAY REQUESTS TABLE ---
+
+CREATE TABLE requests(
+    request_id serial primary key NOT NULL,
+    requester_id int references employee(employee_id) NOT NULL,
+    request_start_date date NOT NULL,
+    request_report_date date NOT NULL,
+    request_status_id int references request_status(request_status_id) NOT NULL default 1
 );
 
 CREATE OR REPLACE FUNCTION loggedChart (startdate DATE, enddate DATE)

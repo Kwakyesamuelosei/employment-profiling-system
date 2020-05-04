@@ -4,17 +4,19 @@ import java.util.Date;
 
 public class RequestTO {
     private int request_id;
+    private String requester_email;
     private int requester_id;
     private Date request_start_date;
     private Date request_report_date;
     private int request_status_id;
     private String from;
     private String requester_name;
+    private String req_status;
 
     public RequestTO() {
     }
 
-    public RequestTO(int request_id, int requester_id, Date request_start_date, Date request_report_date, int request_status_id, String from, String requester_name) {
+    public RequestTO(int request_id, String requester_email, int requester_id, Date request_start_date, Date request_report_date, int request_status_id, String from, String requester_name, String req_status) {
         this.request_id = request_id;
         this.requester_id = requester_id;
         this.request_start_date = request_start_date;
@@ -22,7 +24,12 @@ public class RequestTO {
         this.request_status_id = request_status_id;
         this.from = from;
         this.requester_name = requester_name;
+        this.req_status = req_status;
+        this.requester_email = requester_email;
     }
+    public String getRequester_email() { return requester_email; }
+
+    public void setRequester_email(String requester_email) { this.requester_email = requester_email; }
 
     public int getRequest_id() {
         return request_id;
@@ -76,20 +83,27 @@ public class RequestTO {
         return requester_name;
     }
 
-    public void setRequester_name(String requester_name) {
-        this.requester_name = requester_name;
+    public String getReq_status() {
+        return req_status;
     }
 
-    @Override
+    public void setReq_status(String req_status) {
+        this.req_status = req_status;
+    }
+
+        @Override
     public String toString() {
         return "RequestTO{" +
                 "request_id=" + request_id +
+                ", requester_email='" + requester_email + '\'' +
                 ", requester_id=" + requester_id +
                 ", request_start_date=" + request_start_date +
                 ", request_report_date=" + request_report_date +
                 ", request_status_id=" + request_status_id +
                 ", from='" + from + '\'' +
-                ", requester_name='" + requester_name + '\'' +
+                ", requester_email='" + requester_name + '\'' +
+                ", req_status='" + req_status + '\'' +
                 '}';
     }
 }
+
